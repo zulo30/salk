@@ -1,0 +1,40 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(12,auto);
+  grid-template-rows: repeat(4, auto);
+  grid-gap: 10px;
+  align-content: strecth;
+  justify-content: stretch;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-chart{
+  grid-column: 2/ span 10;
+  grid-row:1;
+  align-self: center;
+}
+.App-main{
+  display: grid;
+  grid-column: span 12;
+  grid-row: span 3;
+  grid-template-columns:repeat(12,auto);
+  grid-template-rows: 1fr;
+  justify-items: stretch;
+}
+.App-main-section{
+  grid-column: span 6;
+  justify-self: stretch;
+  align-self: center;
+}
+
+.recharts-text{
+    font-size: 0.8rem;
+}
