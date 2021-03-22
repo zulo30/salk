@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/salk/static/css/main.a466b4de.chunk.css",
+    "main.js": "/salk/static/js/main.788888ec.chunk.js",
+    "main.js.map": "/salk/static/js/main.788888ec.chunk.js.map",
+    "runtime-main.js": "/salk/static/js/runtime-main.b721715a.js",
+    "runtime-main.js.map": "/salk/static/js/runtime-main.b721715a.js.map",
+    "static/js/2.9ec05591.chunk.js": "/salk/static/js/2.9ec05591.chunk.js",
+    "static/js/2.9ec05591.chunk.js.map": "/salk/static/js/2.9ec05591.chunk.js.map",
+    "static/js/3.1893ad3e.chunk.js": "/salk/static/js/3.1893ad3e.chunk.js",
+    "static/js/3.1893ad3e.chunk.js.map": "/salk/static/js/3.1893ad3e.chunk.js.map",
+    "index.html": "/salk/index.html",
+    "static/css/main.a466b4de.chunk.css.map": "/salk/static/css/main.a466b4de.chunk.css.map",
+    "static/js/2.9ec05591.chunk.js.LICENSE.txt": "/salk/static/js/2.9ec05591.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b721715a.js",
+    "static/js/2.9ec05591.chunk.js",
+    "static/css/main.a466b4de.chunk.css",
+    "static/js/main.788888ec.chunk.js"
+  ]
+}
