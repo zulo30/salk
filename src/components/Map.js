@@ -2,6 +2,7 @@ import { Component } from "react";
 import * as THREE from 'three';
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
+import Object from "../assets/objs/map.obj";
 
 const style = {
     height: 500 // we can control scene size by setting container dimensions
@@ -60,7 +61,7 @@ class Map extends Component {
         // load a resource
         loader.load(
             // resource URL relative to the /public/index.html of the app
-            'assets/objs/map.obj',
+            Object,
             // called when resource is loaded
             (object) => {
 
