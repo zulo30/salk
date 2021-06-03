@@ -1,13 +1,13 @@
 # Proyecto Salk
 
+Trabajo de Computación Gráfica | Universidad EIA ![logo eia](https://github.com/EIA-University/LogosEIA/blob/master/assets/png/logo-eia-icon.png?raw=true)
+
+[https://zulo30.github.io/salk/](https://zulo30.github.io/salk/)
+
 ## Integrantes
 - Mateo Zuluaga Loaiza
 - Pablo José Calle Botero
 - Youlvis Jimenez
-
-Trabajo de Computación Gráfica | Universidad EIA ![logo eia](https://github.com/EIA-University/LogosEIA/blob/master/assets/png/logo-eia-icon.png?raw=true)
-
-[https://zulo30.github.io/salk/](https://zulo30.github.io/salk/)
 
 ## Comenzando :rocket:
 
