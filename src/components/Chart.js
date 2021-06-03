@@ -2044,7 +2044,7 @@ class Chart extends PureComponent {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Area type="monotone" dataKey="Casos" stroke="#8884d8" fill="#8884d8" />
+                <Area type="monotone" dataKey="Casos" stroke="#54428E" fill="#54428E" />
             </AreaChart>
         );
     }

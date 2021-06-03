@@ -2,15 +2,27 @@ import { Component } from "react";
 import * as THREE from 'three';
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
+import vertexShader from "./shaders/vertex.js"
+import fragmentShader from "./shaders/fragment.js"
+
+//asssets 
 import Object from "../assets/objs/map.obj";
+import TextureAmbientOcclusionMap from "../assets/textures/Grass_AmbientOcclusion.jpg"
+import TextureBaseColorMap from "../assets/textures/Grass_BaseColor.jpg"
+import TextureHeightMap from "../assets/textures/Grass_Height.png"
+import TextureNormalMap from "../assets/textures/Grass_Normal.jpg"
+import TextureRoughnessMap from "../assets/textures/Grass_Roughness.jpg"
 
 const style = {
     height: 500 // we can control scene size by setting container dimensions
 };
 
+const { TextureLoader } = THREE;
 
 class Map extends Component {
     componentDidMount() {
+        console.log(vertexShader);
+        console.log(fragmentShader);
         this.sceneSetup();
         this.addLights();
         this.loadTheModel();
@@ -30,7 +42,7 @@ class Map extends Component {
         // get container dimensions and use them for scene sizing
         const width = this.mount.clientWidth;
         const height = this.mount.clientHeight;
-        const bgcolor = new THREE.Color(0x282c34);
+        const bgcolor = new THREE.Color(0x21672b);
 
 
         this.scene = new THREE.Scene();
@@ -52,18 +64,42 @@ class Map extends Component {
         // mount using React ref
     };
 
+   
+
+    setShaderParams = ({map}) => {
+        return {
+            uniforms: {
+                texture: {
+                    value: map 
+                }
+            }, 
+            vertexShader,
+            fragmentShader,
+        }
+    }
+
     // Code below is taken from Three.js OBJ Loader example
     // https://threejs.org/docs/#examples/en/loaders/OBJLoader
     loadTheModel = () => {
         // instantiate a loader
         const loader = new OBJLoader();
+        const meshParams = this.loadTexture()
+        const material_1 = new THREE.MeshStandardMaterial(meshParams);
+        const shaderMaterial = new THREE.ShaderMaterial(
+             this.setShaderParams(meshParams)
+        )
 
         // load a resource
         loader.load(
             // resource URL relative to the /public/index.html of the app
             Object,
+    
             // called when resource is loaded
             (object) => {
+
+                object.traverse(
+                    ( elem ) => {if ( elem instanceof THREE.Mesh ) elem.material = shaderMaterial;}
+                );
 
                 this.scene.add(object);
 
@@ -98,8 +134,24 @@ class Map extends Component {
     };
 
     loadTexture = () => {
+         const loader = new TextureLoader();
+         const textureAmbientOcclusionMap = loader.load(TextureAmbientOcclusionMap);
+         const textureBaseColorMap = loader.load(TextureBaseColorMap);
+         const textureHeightMap = loader.load(TextureHeightMap);
+         const textureNormalMap = loader.load(TextureNormalMap);
+         const textureRoughnessMap = loader.load(TextureRoughnessMap);
+       
+         return {
+            map: textureBaseColorMap,
+            normalMap: textureNormalMap,
+            displacementMap: textureHeightMap,
+            displacementScale: 4.0,
+            roughnessMap: textureRoughnessMap,
+            roughness: 0.5, 
+            aoMap: textureAmbientOcclusionMap
+         };
 
-    }
+    };
 
     // adding some lights to the scene
     addLights = () => {
