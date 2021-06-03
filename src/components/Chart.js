@@ -2039,12 +2039,14 @@ class Chart extends PureComponent {
                     right: 30,
                     left: 20,
                     bottom: 5
-                }}>
-                <XAxis dataKey="Fecha" />
+                }}
+                Stroke="#000000"
+                >
+                <XAxis dataKey="Fecha"  />
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Area type="monotone" dataKey="Casos" stroke="#54428E" fill="#54428E" />
+                <Area type="monotone" dataKey="Casos" stroke="#464E51" fill="#464E51" />
             </AreaChart>
         );
     }

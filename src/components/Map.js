@@ -23,8 +23,6 @@ const { TextureLoader } = THREE;
 
 class Map extends Component {
     componentDidMount() {
-        console.log(vertexShader);
-        console.log(fragmentShader);
         this.sceneSetup();
         this.addLights();
         this.loadTheModel();
@@ -82,10 +80,18 @@ class Map extends Component {
 
     setglowShaderParams = () => {
         return {
+            uniforms: 
+            { 
+                "c":   { type: "f", value: 1.0 },
+                "p":   { type: "f", value: 1.4 },
+                glowColor: { type: "c", value: new THREE.Color(0xffff00) },
+                viewVector: { type: "v3", value: this.camera.position }
+            },
             vertexShader: glowVertexShader,
             fragmentShader: glowFragmentShader,
+            side: THREE.FrontSide,
             blending: THREE.AdditiveBlending,
-            side: THREE.BackSide
+            transparent: true
         }
     }
 
@@ -100,7 +106,7 @@ class Map extends Component {
         )
 
         const glowMaterialShader = new THREE.ShaderMaterial(
-             this.setObjectShaderParams(meshParams)
+             this.setglowShaderParams()
         )
 
         // load a resource
@@ -117,15 +123,24 @@ class Map extends Component {
 
                 this.scene.add(object);
 
-                // get the newly added object by name specified in the OBJ model (that is Elephant_4 in my case)
+                // get the newly added object by name specified in the OBJ model 
                 // you can always set console.log(this.scene) and check its children to know the name of a model
                 const map = this.scene.getObjectByName("map");
                 // change some custom props of the element: placement, color, rotation, anything that should be
                 // done once the model was loaded and ready for display
                 map.position.set(0, 0, 0);
                 map.rotation.x = 1.57;
+            
 
+                let glow = new THREE.Mesh( object.clone(), glowMaterialShader.clone() );
+                console.log(glow);
+                glow.position = map.position;
+                glow.scale.multiplyScalar(1.2);
+                this.scene.add( glow );
 
+                console.log(this.scene)
+
+        
                 // make this element available inside of the whole component to do any animation later
                 this.model = map;
             },
