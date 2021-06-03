@@ -2,8 +2,10 @@ import { Component } from "react";
 import * as THREE from 'three';
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
-import vertexShader from "./shaders/vertex.js"
-import fragmentShader from "./shaders/fragment.js"
+import vertexShader from "./shaders/vertex.glsl"
+import fragmentShader from "./shaders/fragment.glsl"
+import glowVertexShader from "./shaders/glowVertex.glsl"
+import glowFragmentShader from "./shaders/glowFragment.glsl"
 
 //asssets 
 import Object from "../assets/objs/map.obj";
@@ -42,7 +44,7 @@ class Map extends Component {
         // get container dimensions and use them for scene sizing
         const width = this.mount.clientWidth;
         const height = this.mount.clientHeight;
-        const bgcolor = new THREE.Color(0x21672b);
+        const bgcolor = new THREE.Color(0);
 
 
         this.scene = new THREE.Scene();
@@ -66,15 +68,24 @@ class Map extends Component {
 
    
 
-    setShaderParams = ({map}) => {
+    setObjectShaderParams = ({map}) => {
         return {
             uniforms: {
-                texture: {
+                mapTexture: {
                     value: map 
                 }
             }, 
             vertexShader,
             fragmentShader,
+        }
+    }
+
+    setglowShaderParams = () => {
+        return {
+            vertexShader: glowVertexShader,
+            fragmentShader: glowFragmentShader,
+            blending: THREE.AdditiveBlending,
+            side: THREE.BackSide
         }
     }
 
@@ -84,9 +95,12 @@ class Map extends Component {
         // instantiate a loader
         const loader = new OBJLoader();
         const meshParams = this.loadTexture()
-        const material_1 = new THREE.MeshStandardMaterial(meshParams);
-        const shaderMaterial = new THREE.ShaderMaterial(
-             this.setShaderParams(meshParams)
+        const objectMaterialShader = new THREE.ShaderMaterial(
+             this.setObjectShaderParams(meshParams)
+        )
+
+        const glowMaterialShader = new THREE.ShaderMaterial(
+             this.setObjectShaderParams(meshParams)
         )
 
         // load a resource
@@ -98,7 +112,7 @@ class Map extends Component {
             (object) => {
 
                 object.traverse(
-                    ( elem ) => {if ( elem instanceof THREE.Mesh ) elem.material = shaderMaterial;}
+                    ( elem ) => {if ( elem instanceof THREE.Mesh ) elem.material = objectMaterialShader;}
                 );
 
                 this.scene.add(object);
@@ -112,7 +126,7 @@ class Map extends Component {
                 map.rotation.x = 1.57;
 
 
-                // // make this element available inside of the whole component to do any animation later
+                // make this element available inside of the whole component to do any animation later
                 this.model = map;
             },
             // called when loading is in progresses
